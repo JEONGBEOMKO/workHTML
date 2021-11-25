@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>test18</title>
+    <style>
+        *{
+            font-size: 16pt;
+            font-weight: bold;
+        }
+
+        #email_ch{
+            color: red;
+            font-size: 12pt;
+            margin-left: 60px;
+        }
+    </style>
+
+    <script>
+        var flag=false; //전역변수
+
+        function myCheck(){
+           var a = myform.user_code.value;
+           var code_size = document.myform.user_code.value.length; //입력란 문자열길이 
+           var b = document.myform.user_title.value;
+           var c = document.myform.user_email.value;
+
+           if (a=="" || a==null){
+             alert("코드입력란 데이터가 공백입니다\n코드 데이터를 정확하게 입력하세요");
+             myform.user_code.focus();
+             return; 
+           }else{ myform.user_title.focus();}
+
+           //코드입력 문자열 길이 4 
+           if(code_size != 4){
+               alert("코드데이터는 4글자입니다");
+               myform.user_code.value="";
+               myform.user_code.focus();
+               return; 
+           } 
+
+
+           if (b=="" || b==null){
+             alert("제목입력란 데이터가 공백입니다\n제목 데이터를 정확하게 입력하세요");
+             myform.user_title.focus();
+             return; 
+           }else{ myform.user_email.focus();}
+
+           if (c=="" || c==null){
+             //alert("메일입력란 데이터가 공백입니다\n메일 데이터를 정확하게 입력하세요");
+             document.getElementById("email_ch").innerHTML="<font style='font-size:10pt;'>*메일데이터를 입력하세요*</font>";
+             myform.user_email.focus();
+             return; 
+           }else {
+            var mail_reg = /^([a-zA-Z0-9_\.]{3,7})@([a-zA-Z]{2,7})\.([a-zA-Z]{2,5})$/ ;
+            if(mail_reg.test(c)==false){
+               document.getElementById("email_ch").innerHTML="<font style='font-size:10pt;'>*sky@nate.com형식 참고하세요*</font>";
+               myform.user_email.value="";
+               myform.user_email.focus();
+               return;
+            }else{document.getElementById("email_ch").innerHTML=""; return ;}    
+           }
+        }//end
+
+        function codeNumber(){
+            var code = myform.user_code.value;
+            var code_size = document.myform.user_code.value.length; 
+            for(i=0; i<code_size; i++){
+                //java에서 주민번호 성별구별할때 char gender = charAt(int)
+                if(code.charAt(i)<'0' || code.charAt(i)>'9'){
+                    alert("숫자를 입력하셔야 합니다");
+                    //myform.user_code.value=""; 입력내용전체 삭제
+                    myform.user_code.value= code.substring(0,i);
+                    //myform.user_code.value= code.substr(0,i);
+                    myform.user_code.focus()
+                }
+            }//for end
+        }//end
+
+    </script>
+</head>
+<body>
+    
+ <h2>test18form.html</h2>
+  <div style="width: 700px;">
+    <form name="myform" action="" method="get">
+      <fieldset>
+        <legend>LG캠프 지원서</legend>
+        <div>
+            <label>코드:</label>
+            <input type="text"  maxlength="4"  name="user_code" id="user_code"  onkeyup="codeNumber()" /> 
+            <span id="code_ch"></span>
+        </div>
+        <div>
+            <label>제목:</label>
+            <input type="text" name="user_title" id="user_title" value="summer" /> <span id="code_ch"></span>
+        </div>
+        <div>
+            <label>메일:</label>
+            <input type="text" name="user_email" id="user_email" /> <span id="email_ch"></span>
+        </div>
+        <div>
+            <label>우편:</label>
+            <input type="text" name="user_post" id="user_post" size="10" /> 
+            <input type="button" value="우편번호">
+        </div>
+        <div>
+            <label>주소:</label>
+            <input type="text" name="user_juso1" id="user_juso1" /> 
+        </div>
+        <div>
+            <label>주소:</label>
+            <input type="text" name="user_juso2" id="user_juso2" /> 
+        </div>
+
+        <div>
+            <input type="button" onclick="javascript:myCheck();" value="데이터등록확인"> <!--자바스크립트  함수연결-->
+            <input type="reset" value="입력취소">
+            <button onclick="">버튼등록확인</button>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+<hr>
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
